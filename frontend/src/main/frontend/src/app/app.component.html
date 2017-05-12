@@ -1,0 +1,32 @@
+<header>
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">My Angular 2 App!</a>
+    </div>
+  </nav>  
+</header>
+
+ <main>
+  <div class="col-sm-4">
+    <div *ngIf="users">
+      <ul class="list-group">
+        <li class="list-group-item" 
+          *ngFor="let user of users"
+          (click)="selectUser(user)"
+          [class.active]="user === activeUser">
+            {{user.name}} {{user.username}}
+        </li>
+      </ul>
+    </div>
+    <user-form (userCreationEvent)="userCreationEventHandler($event)"></user-form>
+   </div>
+  <user-profile [user]="activeUser"></user-profile>
+  <div class="col-sm-8">
+    <div class="jumbotron gocrazy" *ngIf="!activeUser">
+      <span class="glyphicon glyphicon-hand-left"></span>
+      <h2>Choose an user...</h2>
+    </div>
+  </div>
+</main>
+ 
+<footer class="text-center">Copyright NCAMBROSIO 2017</footer>
