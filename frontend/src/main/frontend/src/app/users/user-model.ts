@@ -1,5 +1,14 @@
 export class User {
   id: number;
-  name: string;
   username: string;
+  name: string;
+  email: string;
+  password: string;
+  
+  constructor(id? :number, username? :string, email? : string, password? : string) {
+  	this.id = id;
+  	this.username = username;
+  	this.email = email;
+    this.password = null;
+  }
 }

@@ -25,6 +25,6 @@ public interface UserDao extends CrudRepository<User, Long> {
    * 
    * @param email the user email.
    */
-  public yes.share.library.persistence.entity.User findByEmail(String email);
-
+  public User findByEmail(String email);
+  
 }

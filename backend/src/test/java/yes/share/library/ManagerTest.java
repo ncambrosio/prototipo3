@@ -16,7 +16,7 @@ import yes.share.library.services.UserManager;
 @RunWith(SpringRunner.class)
 @Transactional
 @SpringBootTest
-public class YesShareApplicationTests {
+public class ManagerTest {
 
 	@Autowired
 	UserManager userManager;

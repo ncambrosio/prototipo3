@@ -9,4 +9,8 @@ public interface UserManager extends Manager {
 	public Iterable<User> findAll() throws DataAccessException;
 	
     public User findById(Long userId) throws DataAccessException;
+    
+    public void save(User user) throws DataAccessException;
+    
+    public Long createUser(User user) throws DataAccessException;
 }

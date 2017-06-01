@@ -6,12 +6,8 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
 	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="application.properties" />
-	</bean>
- 	
 	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    	<!-- <constructor-arg value="100"/> -->
+    	<!-- <constructor-arg value="10"/> -->
 	</bean>
 
 </beans>

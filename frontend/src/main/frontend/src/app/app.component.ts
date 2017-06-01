@@ -1,21 +1,33 @@
 import { Component, NgModule } from '@angular/core';
 import { User } from './users/user-model';
+import { UserService } from './users/user-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [UserService]
 })
 export class AppComponent {
-  title: string = 'YesShare';
-  users: User[] = [
-    {id: 25, name: 'Noé', username : 'Chinaski'},
-    {id: 26, name: 'Patricia', username : 'Ferepelente'},
-    {id: 27, name: 'Miguel', username : 'Cunetas'}
-  ];
 
-  // Usuario activo/seleccionado
+  users: User[];
+  title: string = 'YesShare';
   activeUser: User;
+
+  constructor(private userService: UserService) {
+
+  }
+  
+  ngOnInit() {
+    this.updateUserList();
+    /*
+    this.userService.getUser()
+                    .subscribe(
+                      data => console.log(data),
+                      err => console.log(err),
+                      () => console.log("Listo User simple!"));
+    */
+  }
 
   selectUser(user) {
     this.activeUser=user;
@@ -23,6 +35,20 @@ export class AppComponent {
   }
 
   userCreationEventHandler(event) {
-    this.users.push(event.user);
+    //this.users.push(event.user);
+    this.userService.createNewUser(event.user)
+                    .subscribe(
+                      data => console.log(data),
+                      err => console.log("Create User ERROR: " + err),
+                      () => this.updateUserList()
+                    );
+  }
+
+  updateUserList(filtro? : string) {
+    this.userService.getUserList()
+                .subscribe(
+                  data => console.log(this.users = data),
+                  err => console.log("Error en lista: " + err),
+                  () => console.log("Listo Users!"));
   }
 }

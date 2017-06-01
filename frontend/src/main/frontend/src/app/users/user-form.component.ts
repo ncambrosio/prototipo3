@@ -13,7 +13,19 @@ import { User } from './user-model';
 	template: `
 		<form #form="ngForm" (ngSubmit)="onSubmit()" *ngIf="ready">
 
-			{{form.valid}}
+			<div class="form-group" [ngClass]="{'has-error': username.invalid && username.touched}">
+				<input type="text" class="form-control" placeholder="Username"
+					name="username" required
+					[(ngModel)]="newUser.username" #username="ngModel" />
+				<span class="help-block" *ngIf="username.invalid && username.touched">Username is required</span>
+			</div>
+
+			<div class="form-group" [ngClass]="{'has-error': password.invalid && password.touched}">
+				<input type="password" class="form-control" placeholder="Password"
+					name="password" required
+					[(ngModel)]="newUser.password" #password="ngModel" />
+				<span class="help-block" *ngIf="password.invalid && password.touched">Password is required</span>
+			</div>
 
 			<div class="form-group" [ngClass]="{'has-error': name.invalid && name.touched}">
 				<input type="text" class="form-control" placeholder="Name"
@@ -22,11 +34,13 @@ import { User } from './user-model';
 				/>
 				<span class="help-block" *ngIf="name.invalid && name.touched">Name is required</span>
 			</div>
-			<div class="form-group" [ngClass]="{'has-error': username.invalid && username.touched}">
-				<input type="text" class="form-control" placeholder="Username"
-					name="username" required
-					[(ngModel)]="newUser.username" #username="ngModel" />
-				<span class="help-block" *ngIf="username.invalid && username.touched">Username is required</span>
+
+			<div class="form-group" [ngClass]="{'has-error': email.invalid && email.touched}">
+				<input type="email" class="form-control" placeholder="Email"
+					name="email" required
+					[(ngModel)]="newUser.email" #email="ngModel"
+				/>
+				<span class="help-block" *ngIf="email.invalid && email.touched">Email is required</span>
 			</div>
 
 			<button type="submit" class="btn btn.lg btn-block btn-primary"
