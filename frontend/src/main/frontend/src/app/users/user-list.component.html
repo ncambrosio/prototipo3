@@ -1,0 +1,21 @@
+
+  <div class="col-sm-4">
+    <div *ngIf="users">
+      <ul class="list-group">
+        <li class="list-group-item" 
+          *ngFor="let user of users"
+          (click)="selectUser(user)"
+          [class.active]="user === activeUser">
+            {{user.name}} {{user.username}}
+        </li>
+      </ul>
+    </div>
+    <user-form (userCreationEvent)="userCreationEventHandler($event)"></user-form>
+   </div>
+  <user-profile [user]="activeUser"></user-profile>
+  <div class="col-sm-8">
+    <div *ngIf="!activeUser">
+      <span class="glyphicon glyphicon-hand-left"></span>
+      <h2>Choose an user...</h2>
+    </div>
+  </div>

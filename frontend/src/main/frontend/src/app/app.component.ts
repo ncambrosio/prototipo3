@@ -1,54 +1,63 @@
 import { Component, NgModule } from '@angular/core';
+//import { Router } from '@angular/router';
 import { User } from './users/user-model';
 import { UserService } from './users/user-service';
+import { AuthService } from './auth/auth-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserService]
+  providers: [UserService
+              , AuthService
+              //, Router
+              ]
 })
 export class AppComponent {
 
-  users: User[];
-  title: string = 'YesShare';
-  activeUser: User;
+  loguedUser: User;
+  loguedUsername: string;
+  authenticated: boolean;
 
-  constructor(private userService: UserService) {
+  constructor(	private authService: AuthService, 
+  				//private router: Router
+    		 )
+  {
 
   }
   
   ngOnInit() {
-    this.updateUserList();
-    /*
-    this.userService.getUser()
-                    .subscribe(
-                      data => console.log(data),
-                      err => console.log(err),
-                      () => console.log("Listo User simple!"));
-    */
+    this.isUserLogued();
   }
 
-  selectUser(user) {
-    this.activeUser=user;
-    console.log(this.activeUser);
+  private isUserLogued() {
+    this.authService.getLoguedUser()
+    	.subscribe(
+          data => {
+          	  console.log("isUserLogued().data: " + data);
+              this.loguedUsername = data.userAuthentication.details.name;
+              this.authenticated = true;
+          },
+          err => {
+              console.log("isUserLogued().err: " + err);
+              this.loguedUsername = "N/A";
+              this.authenticated = false;
+          },
+          () => console.log("isUserLogued().END"));
   }
 
-  userCreationEventHandler(event) {
-    //this.users.push(event.user);
-    this.userService.createNewUser(event.user)
-                    .subscribe(
-                      data => console.log(data),
-                      err => console.log("Create User ERROR: " + err),
-                      () => this.updateUserList()
-                    );
-  }
-
-  updateUserList(filtro? : string) {
-    this.userService.getUserList()
-                .subscribe(
-                  data => console.log(this.users = data),
-                  err => console.log("Error en lista: " + err),
-                  () => console.log("Listo Users!"));
+  doLogout() {
+  	this.authService.logout()
+  		.subscribe(
+          data => {
+          	  console.log("doLogout().data: " + data);
+              this.loguedUsername = "N/A";
+              this.authenticated = false;
+              //this.router.navigate(['/'], { queryParams: { returnUrl: '/'}});
+          },
+          err => {
+            console.log("doLogout().err :" + err);
+          },
+          () => console.log("doLogout().END"));
   }
 }

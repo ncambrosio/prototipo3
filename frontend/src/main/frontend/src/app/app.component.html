@@ -1,32 +1,23 @@
 <header>
   <nav class="navbar navbar-inverse">
     <div class="navbar-header">
-      <a href="/" class="navbar-brand">My Angular 2 App!</a>
+      <a href="/" class="navbar-brand">Resharevoir book!</a>
     </div>
+
   </nav>  
 </header>
 
  <main>
-  <div class="col-sm-4">
-    <div *ngIf="users">
-      <ul class="list-group">
-        <li class="list-group-item" 
-          *ngFor="let user of users"
-          (click)="selectUser(user)"
-          [class.active]="user === activeUser">
-            {{user.name}} {{user.username}}
-        </li>
-      </ul>
-    </div>
-    <user-form (userCreationEvent)="userCreationEventHandler($event)"></user-form>
-   </div>
-  <user-profile [user]="activeUser"></user-profile>
-  <div class="col-sm-8">
-    <div class="jumbotron gocrazy" *ngIf="!activeUser">
-      <span class="glyphicon glyphicon-hand-left"></span>
-      <h2>Choose an user...</h2>
-    </div>
-  </div>
+ 	<span *ngIf="!authenticated">
+		Login with: <a href="/login">Facebook</a>
+		Login with: <a href="/github">GitHub</a>
+		Login with: <a href="#">Formulario</a>
+ 	</span>
+ 	<span *ngIf="authenticated">
+ 		Hola {{loguedUsername}}<br>
+		<button (click)="doLogout()" class="btn btn-primary">Logout</button>
+ 	</span>
+    <user-list *ngIf="authenticated"></user-list>
 </main>
  
 <footer class="col-sm-12 text-center">Copyright NCAMBROSIO 2017</footer>
