@@ -1,0 +1,15 @@
+.navbar-default .navbar-backgrnd .navbar-nav .navbar-header {
+    color: #CC3333;
+    background-color: #CC3333;
+}
+
+.navbar-header {
+	background-color: #333333;
+	font-size: 20px;
+}
+
+.navbar-brand {
+	background-color: #FFFFFF;
+	padding: 5px;
+	font-size: 25px;
+}

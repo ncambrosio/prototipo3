@@ -1,23 +1,13 @@
-<header>
-  <nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <a href="/" class="navbar-brand">Resharevoir book!</a>
-    </div>
-
-  </nav>  
+<header *ngIf="sessionService.authenticated">
+  <app-navbar-2></app-navbar-2>
 </header>
 
- <main>
- 	<span *ngIf="!authenticated">
-		Login with: <a href="/login">Facebook</a>
-		Login with: <a href="/github">GitHub</a>
-		Login with: <a href="#">Formulario</a>
- 	</span>
- 	<span *ngIf="authenticated">
- 		Hola {{loguedUsername}}<br>
-		<button (click)="doLogout()" class="btn btn-primary">Logout</button>
- 	</span>
-    <user-list *ngIf="authenticated"></user-list>
+<main *ngIf="sessionService.authenticated">
+	<router-outlet></router-outlet>
 </main>
+
+<login-form *ngIf="!sessionService.authenticated"></login-form>
  
-<footer class="col-sm-12 text-center">Copyright NCAMBROSIO 2017</footer>
+<footer *ngIf="sessionService.authenticated" class="col-sm-12 text-center">
+	<span>Copyright NCAMBROSIO 2017</span>
+</footer>
