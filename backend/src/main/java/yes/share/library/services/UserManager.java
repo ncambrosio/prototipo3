@@ -10,6 +10,8 @@ public interface UserManager extends Manager {
 	
     public User findById(Long userId) throws DataAccessException;
     
+    public User findByFacebookId(String facebookId) throws DataAccessException;
+    
     public void save(User user) throws DataAccessException;
     
     public Long createUser(User user) throws DataAccessException;

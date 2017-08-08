@@ -1,13 +1,18 @@
 package yes.share.library.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,26 +29,31 @@ public class User {
   	@GeneratedValue(strategy = GenerationType.AUTO)
   	private long id;
   
-  	@NotNull
-  	@Column(name = "username", nullable = false, length = 255)
+  	@Column(name = "username", nullable = true, length = 255)
   	private String username;
   
-  	@NotNull
-  	@Column(name = "password", nullable = false, length = 255)
+  	@Column(name = "password", nullable = true, length = 255)
   	private char[] password;
-  
-  	@NotNull
+  	
+  	//@NotNull @Column(unique=true)
+  	private String email;
+  	
   	private String name;
   
-  	@Null
   	private String familyName1;
   
-  	@Null
   	private String familyName2;
   
-  	@NotNull
-  	private String email;
-  
+  	private String facebookId;
+  	
+  	private String googleId;
+  	
+  	private String githubId;
+  	
+  	@JsonIgnore
+  	@OneToMany(fetch = FetchType.EAGER, mappedBy="user" )
+  	private Set<UserRole> userRoles;
+  	
   	public User() {}
 
   	public User(long id) { 
@@ -109,5 +119,46 @@ public class User {
 	
 	public void setEmail(String value) {
 		this.email = value;
-	} 
+	}
+
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
+
+	public String getGithubId() {
+		return githubId;
+	}
+
+	public void setGithubId(String githubId) {
+		this.githubId = githubId;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	@Transient
+	public List<String> getAuthorities() {
+		List<String> authorities = new ArrayList<String>();
+		for (UserRole userRoles : getUserRoles()) {
+			authorities.add(userRoles.getRole().getPrefixName());
+		}
+		return authorities;
+	}
 }
